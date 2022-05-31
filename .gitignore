@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /storage/debugbar/
+/storage/api-docs
 /vendor
 .env
 .env.backup
