@@ -7,58 +7,131 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## Install Laravel API
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Copy .env.example to .env
+- Edit APP_URL with API URL, edit MySQL config.
+- Run command
+  ```
+  composer install
+  php artisan migrate --seed
+  php artisan passport:install
+  ```
+  
+## Use multi auth
+- Step 1: Add guards and providers to config/auth.php
+- Step 2: Model use trait Laravel\Passport\HasApiTokens
+- Step 3: Specify user provider uses --provider option
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Example: provider customers
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+  ```
+  php artisan passport:client --password --provider=customers
+  ```
 
-## Learning Laravel
+## Common
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Constant
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Instead of using const in class to import. We will use const in config/constants.php
+Example:
 
-## Laravel Sponsors
+```
+    'TYPE_CUSTOMER' => 'customer',
+    'TYPE_ADMIN' => 'admin',
+    'TYPE_MANAGER' => 'manager',
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### 2. Rule commit
 
-### Premium Partners
+## Rule Commit Message
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Based on the Angular convention:
 
-## Contributing
+```
+type(scope?): subject
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+- ci: Changes to our CI configuration files and scripts (example scopes: Gitlab CI, Circle, BrowserStack, SauceLabs)
+- chore: add something without touching production code (Eg: update npm dependencies)
+- docs: Documentation only changes
+- feat: A new feature
+- fix: A bug fix
+- perf: A code change that improves performance
+- refactor: A code change that neither fixes a bug nor adds a feature
+- revert: Reverts a previous commit
+- style: Changes that do not affect the meaning of the code (Eg: adding white-space, formatting, missing semi-colons,
+  etc)
+- test: Adding missing tests or correcting existing tests
 
-## Code of Conduct
+## Package Intergrate
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Laravel Debugbar
 
-## Security Vulnerabilities
+https://github.com/barryvdh/laravel-debugbar
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Laravel IDE Helper Generator
 
-## License
+https://github.com/barryvdh/laravel-ide-helper
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Passport (use Password Grant Tokens):
+
+https://laravel.com/docs/8.x/passport
+
+### Laravel Permission:
+
+https://spatie.be/docs/laravel-permission/v5/basic-usage/basic-usage
+
+### Generate doc api (Swagger):
+
+https://github.com/DarkaOnLine/L5-Swagger
+
+1. Add comments to controller's method
+
+```
+
+/**
+     * @OA\Post(
+     *  path="/auth/login",
+     *  operationId="registerUser",
+     *  tags={"User"},
+     *  summary="Register user",
+     *  description="Returns message and status",
+     *  @OA\Parameter(name="name",
+     *    in="query",
+     *    required=true,
+     *    @OA\Schema(type="string")
+     *  ),
+     *  @OA\Parameter(name="email",
+     *    in="query",
+     *    required=true,
+     *    @OA\Schema(type="string")
+     *  ),
+     *  @OA\Parameter(name="password",
+     *    in="query",
+     *    required=true,
+     *    @OA\Schema(type="string")
+     *  ),
+     *  @OA\Response(response="201",
+     *    description="Register success",
+     *  )
+     * )
+     */
+```
+
+Reference: https://blog.quickadminpanel.com/laravel-api-documentation-with-openapiswagger/
+
+2. Run
+
+```
+   php artisan l5-swagger:generate
+   sudo chmod 777 -R storage/api-docs/
+```
+
+3. View document api
+   You can access your documentation at `/api/documentation` endpoint
+
+### Laravel Excel
+
+Read More: https://docs.laravel-excel.com/3.1/getting-started/
