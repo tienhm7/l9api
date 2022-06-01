@@ -16,3 +16,4 @@ _ide_helper.php
 .phpstorm.meta.php
 /.idea
 /.vscode
+build.sh
