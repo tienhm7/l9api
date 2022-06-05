@@ -7,6 +7,8 @@ const PENDING = 2;
 
 // Provider
 const PROVIDER_USER = 'users';
+const PROVIDER_EMPLOYEE = 'employees';
+const PROVIDER_MANAGER = 'managers';
 
 // HTTP status code
 const HTTP_OK = 200;
