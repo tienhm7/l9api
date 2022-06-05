@@ -37,9 +37,9 @@ Instead of using const in class to import. We will use const in config/constants
 Example:
 
 ```
-    'TYPE_CUSTOMER' => 'customer',
-    'TYPE_ADMIN' => 'admin',
-    'TYPE_MANAGER' => 'manager',
+// Status
+const DISABLE = 0;
+const ENABLE = 1;
 ```
 
 ### 2. Rule commit

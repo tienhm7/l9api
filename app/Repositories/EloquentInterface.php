@@ -241,4 +241,25 @@ interface EloquentInterface
      * @return mixed
      */
     public function simplePaginate($limit = null, $columns = ['*']);
+
+    /**
+     * @param $relation
+     * @param array|null $ids
+     * @return mixed
+     */
+    public function detach($relation, array $ids = null);
+
+    /**
+     * @param $relation
+     * @param array|null $ids
+     * @return mixed
+     */
+    public function attach($relation, array $ids = null);
+
+    /**
+     * @param $relation
+     * @param array|null $ids
+     * @return mixed
+     */
+    public function sync($relation, array $ids = null);
 }
