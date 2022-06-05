@@ -457,6 +457,36 @@ abstract class EloquentRepository implements EloquentInterface
     }
 
     /**
+     * @param $relation
+     * @param array|null $ids
+     * @return mixed
+     */
+    public function detach($relation, array $ids = null)
+    {
+        return $this->model->{$relation}()->detach($ids);
+    }
+
+    /**
+     * @param $relation
+     * @param array|null $ids
+     * @return mixed
+     */
+    public function attach($relation, array $ids = null)
+    {
+        return $this->model->{$relation}()->attach($ids);
+    }
+
+    /**
+     * @param $relation
+     * @param array|null $ids
+     * @return mixed
+     */
+    public function sync($relation, array $ids = null)
+    {
+        return $this->model->{$relation}()->sync($ids);
+    }
+
+    /**
      * Applies the given where conditions to the model.
      *
      * @param array $where
